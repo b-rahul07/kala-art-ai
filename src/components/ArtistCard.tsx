@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ExternalLink } from "lucide-react";
 
 interface ArtistCardProps {
@@ -14,18 +14,38 @@ interface ArtistCardProps {
 const ArtistCard = ({ name, genre, nationality, years, wikipedia, index }: ArtistCardProps) => {
   const primaryGenre = genre.split(",")[0].trim();
   const [isHovered, setIsHovered] = useState(false);
-  const [imageError, setImageError] = useState(false);
+  const [imageUrl, setImageUrl] = useState<string | null>(null);
 
-  // Construct image path: /artists/Firstname_Lastname.jpg
-  const imagePath = `/artists/${name.replace(/\s+/g, "_")}.jpg`;
+  useEffect(() => {
+    const fetchWikipediaImage = async () => {
+      try {
+        const urlParts = wikipedia.split('/wiki/');
+        if (urlParts.length < 2) return;
+
+        const pageName = urlParts[1];
+        const apiUrl = `https://en.wikipedia.org/w/api.php?action=query&titles=${encodeURIComponent(pageName)}&prop=pageimages&format=json&pithumbsize=500&origin=*&redirects=1`;
+
+        const response = await fetch(apiUrl);
+        const data = await response.json();
+
+        const pages = data.query?.pages;
+        if (pages) {
+          const pageId = Object.keys(pages)[0];
+          const thumbnail = pages[pageId]?.thumbnail?.source;
+          if (thumbnail) {
+            setImageUrl(thumbnail);
+          }
+        }
+      } catch (err) {
+        console.error('Failed to fetch Wikipedia image:', err);
+      }
+    };
+
+    fetchWikipediaImage();
+  }, [wikipedia]);
 
   // Generate fallback gradient color
   const hue = (name.charCodeAt(0) * 7 + name.charCodeAt(1) * 3) % 40 + 20;
-
-  const handleImageError = () => {
-    console.error("Failed to load:", imagePath);
-    setImageError(true);
-  };
 
   return (
     <motion.a
@@ -50,30 +70,23 @@ const ArtistCard = ({ name, genre, nationality, years, wikipedia, index }: Artis
           scale: isHovered ? 1.05 : 1,
         }}
         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+        style={{
+          backgroundImage: imageUrl
+            ? `url(${imageUrl})`
+            : `linear-gradient(135deg, hsl(${hue} 60% 95%) 0%, hsl(${hue + 20} 50% 90%) 100%)`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }}
       >
-        {!imageError ? (
-          <img
-            src={imagePath}
-            alt={name}
-            onError={handleImageError}
-            className="h-full w-full object-cover"
-          />
-        ) : (
-          <div
-            className="h-full w-full"
-            style={{
-              backgroundImage: `linear-gradient(135deg, hsl(${hue} 60% 95%) 0%, hsl(${hue + 20} 50% 90%) 100%)`,
-            }}
-          >
-            {/* Fallback Initial if image fails */}
-            <div className="absolute inset-0 flex items-center justify-center">
-              <span
-                className="font-serif text-8xl italic"
-                style={{ color: `hsl(${hue} 40% 40% / 0.3)` }}
-              >
-                {name.charAt(0)}
-              </span>
-            </div>
+        {/* Fallback Initial if no image */}
+        {!imageUrl && (
+          <div className="absolute inset-0 flex items-center justify-center">
+            <span
+              className="font-serif text-8xl italic"
+              style={{ color: `hsl(${hue} 40% 40% / 0.3)` }}
+            >
+              {name.charAt(0)}
+            </span>
           </div>
         )}
       </motion.div>
