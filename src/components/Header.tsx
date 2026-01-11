@@ -17,20 +17,22 @@ const Header = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Use white text on home page (over dark banner), dark text on other pages
+  // Use golden text on home page, dark text on other pages
   const isHomePage = location.pathname === '/';
+
+  // Golden theme for home page, standard for other pages
   const textColor = isHomePage
-    ? 'text-white/90 hover:text-white'
+    ? 'text-amber-400 hover:text-white'
     : 'text-foreground/80 hover:text-foreground';
   const activeColor = isHomePage
-    ? 'text-amber-300'
+    ? 'text-white'
     : 'text-amber-700 dark:text-gold';
 
-  // Dynamic background based on scroll
+  // Dynamic background based on scroll - deep charcoal when scrolled
   const headerBg = scrolled
-    ? 'bg-background/80 backdrop-blur-md border-b border-white/10'
+    ? 'bg-black/90 backdrop-blur-md border-b border-amber-400/20'
     : isHomePage
-      ? 'bg-transparent backdrop-blur-sm'
+      ? 'bg-transparent'
       : 'bg-background/80 backdrop-blur-md border-b border-border/40';
 
   return (
@@ -78,8 +80,8 @@ const Header = () => {
           >
             About
           </Link>
-          <div className="ml-2 h-4 w-px bg-border/60" />
-          <ThemeToggle />
+          <div className="ml-2 h-4 w-px bg-amber-400/40" />
+          <ThemeToggle isHomePage={isHomePage} />
         </nav>
       </div>
     </motion.header>

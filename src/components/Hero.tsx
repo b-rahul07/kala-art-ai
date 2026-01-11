@@ -167,7 +167,7 @@ const Hero = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.2, duration: 0.6 }}
-            className="font-serif text-4xl md:text-5xl italic text-white drop-shadow-2xl"
+            className="font-serif text-5xl md:text-6xl lg:text-7xl italic text-white drop-shadow-2xl"
           >
             Where Art Finds Itself
           </motion.h2>
@@ -177,7 +177,8 @@ const Hero = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4, duration: 0.6 }}
-            className="max-w-2xl font-serif text-xl md:text-2xl font-light text-white/95 leading-relaxed drop-shadow-2xl"
+            className="max-w-2xl font-serif text-xl md:text-2xl font-light text-white/90 leading-relaxed"
+            style={{ textShadow: '0 0 20px rgba(251, 191, 36, 0.3), 0 2px 10px rgba(0, 0, 0, 0.8)' }}
           >
             Upload any artwork and discover its creator. <span className="text-amber-300 font-medium">Powered by deep learning</span> to recognize the styles of <span className="text-gold font-medium">50 legendary masters</span>.
           </motion.p>

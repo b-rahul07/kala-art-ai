@@ -2,13 +2,22 @@ import { motion } from "framer-motion";
 import { Moon, Sun } from "lucide-react";
 import { useTheme } from "@/hooks/use-theme";
 
-const ThemeToggle = () => {
+interface ThemeToggleProps {
+  isHomePage?: boolean;
+}
+
+const ThemeToggle = ({ isHomePage = false }: ThemeToggleProps) => {
   const { theme, toggleTheme } = useTheme();
+
+  // Match navigation link styling
+  const iconColor = isHomePage
+    ? 'text-amber-400 hover:text-white'
+    : 'text-foreground/80 hover:text-foreground';
 
   return (
     <motion.button
       onClick={toggleTheme}
-      className="relative flex h-8 w-8 items-center justify-center text-white/90 transition-colors duration-300 hover:text-white"
+      className={`relative flex h-8 w-8 items-center justify-center transition-colors duration-300 ${iconColor}`}
       whileHover={{ scale: 1.1 }}
       whileTap={{ scale: 0.95 }}
       aria-label={`Switch to ${theme === "light" ? "dark" : "light"} mode`}
