@@ -1,9 +1,18 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ArtistCard from "@/components/ArtistCard";
-import { Artist, parseArtistsCSV } from "@/lib/artists";
+import { artistStyles } from "../utils/artistStyles";
+
+interface Artist {
+  id: string;
+  name: string;
+  genre: string;
+  nationality: string;
+  years: string;
+  wikipedia: string;
+}
 
 const Collection = () => {
   const [artists, setArtists] = useState<Artist[]>([]);
@@ -12,14 +21,42 @@ const Collection = () => {
   useEffect(() => {
     const loadArtists = async () => {
       try {
-        const data = await parseArtistsCSV();
-        setArtists(data);
+        // Fetch the CSV file
+        const response = await fetch('/data/artists.csv');
+        const csvText = await response.text();
+
+        // Parse CSV
+        const lines = csvText.trim().split('\n');
+        const headers = lines[0].split(',');
+
+        const parsedArtists: Artist[] = lines.slice(1).map((line, index) => {
+          const values = line.split(',');
+          const name = values[0]?.trim() || '';
+          const nationality = values[1]?.trim() || '';
+          const years = values[2]?.trim() || '';
+          const wikipedia = values[3]?.trim() || '';
+
+          // Get genre from artistStyles
+          const genre = artistStyles[name] || "Modern Art";
+
+          return {
+            id: `artist-${index}`,
+            name,
+            genre,
+            nationality,
+            years,
+            wikipedia
+          };
+        });
+
+        setArtists(parsedArtists);
       } catch (error) {
         console.error("Failed to load artists:", error);
       } finally {
         setIsLoading(false);
       }
     };
+
     loadArtists();
   }, []);
 
