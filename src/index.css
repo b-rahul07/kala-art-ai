@@ -249,7 +249,7 @@
 
 /* Hero Background Image Logic - Solid with Dark Overlay */
 .hero-bg-image {
-  background-image: url('/hero-bg.jpg');
+  background-image: url('/starry-night.jpg');
   background-size: cover;
   background-position: center;
   position: absolute;
