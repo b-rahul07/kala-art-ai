@@ -152,11 +152,10 @@ const ClassificationResult = ({
                 href={wikipediaUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group inline-flex items-center gap-2 font-serif text-base text-amber-200/90 transition-all duration-300 hover:underline decoration-1 underline-offset-4"
-                style={{ color: '#D4AF37' }}
+                className="group inline-flex items-center gap-2 font-serif text-lg md:text-xl text-amber-700 dark:text-amber-200/90 transition-all duration-300 hover:underline decoration-2 underline-offset-4"
               >
-                Explore the story behind the master: <span className="italic">{topPrediction.artist}</span>
-                <ExternalLink className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                Explore the story behind the master: <span className="italic font-medium">{topPrediction.artist}</span>
+                <ExternalLink className="h-5 w-5 transition-transform group-hover:translate-x-1" />
               </a>
             </motion.div>
           )}
