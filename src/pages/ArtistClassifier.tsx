@@ -52,7 +52,7 @@ const ArtistClassifier = () => {
             const formData = new FormData();
             formData.append('image', selectedImage);
 
-            const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+            const apiUrl = import.meta.env.VITE_API_URL || 'https://ricky07-b-kala-api.hf.space';
             const response = await fetch(`${apiUrl}/api/classify`, {
                 method: 'POST',
                 body: formData,
