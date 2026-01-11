@@ -6,7 +6,7 @@ const Index = () => {
   return (
     <div className="flex flex-col min-h-screen bg-background overflow-hidden">
       <Header />
-      <main className="flex-grow pt-24 md:pt-48">
+      <main className="flex-grow">
         <Hero />
       </main>
       <Footer />
