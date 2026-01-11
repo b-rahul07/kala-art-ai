@@ -17,12 +17,17 @@ const ArtistCard = ({ name, genre, nationality, years, wikipedia, index }: Artis
   const [imageError, setImageError] = useState(false);
 
   // Construct image path: /artists/Firstname_Lastname.jpg
-  const imagePath = `/artists/${name.replace(/ /g, '_')}.jpg`;
+  // Replace all whitespace with underscores
+  const imagePath = `/artists/${name.replace(/\s+/g, "_")}.jpg`;
+
+  // Debug logging
+  console.log("Loading image:", imagePath);
 
   // Generate fallback gradient color
   const hue = (name.charCodeAt(0) * 7 + name.charCodeAt(1) * 3) % 40 + 20;
 
   const handleImageError = () => {
+    console.error("Failed to load:", imagePath);
     setImageError(true);
   };
 
