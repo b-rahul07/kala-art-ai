@@ -30,9 +30,9 @@ const Header = () => {
 
   // Dynamic background based on scroll - deep charcoal when scrolled
   const headerBg = scrolled
-    ? 'bg-black/90 backdrop-blur-md border-b border-amber-400/20'
+    ? 'bg-black/90 backdrop-blur-lg border-b border-amber-400/20'
     : isHomePage
-      ? 'bg-transparent'
+      ? 'bg-transparent backdrop-blur-sm'
       : 'bg-background/80 backdrop-blur-md border-b border-border/40';
 
   return (
@@ -42,29 +42,29 @@ const Header = () => {
       transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
       className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${headerBg}`}
     >
-      <div className="container mx-auto flex h-16 items-center justify-between px-8">
+      <div className="container mx-auto flex h-16 items-center justify-between px-4 md:px-8">
         <Link to="/" className="flex items-center group">
           <motion.img
             whileHover={{ scale: 1.05, rotate: 5 }}
             transition={{ type: "spring", stiffness: 400 }}
             src="/kala-logo-transparent.png"
             alt="కళ | Kala"
-            className="h-24 w-auto transition-all duration-300"
+            className="h-20 md:h-24 w-auto min-w-[60px] transition-all duration-300"
           />
         </Link>
 
-        <nav className="flex items-center gap-6">
+        <nav className="flex items-center gap-3 md:gap-6">
           <a
             href="https://github.com/b-rahul07/kala-art-ai"
             target="_blank"
             rel="noopener noreferrer"
-            className={`text-sm font-medium uppercase tracking-wider transition-colors ${textColor}`}
+            className={`text-xs md:text-sm font-medium uppercase tracking-wider transition-colors px-2 py-2 ${textColor}`}
           >
             GitHub
           </a>
           <Link
             to="/collection"
-            className={`text-sm font-medium uppercase tracking-wider transition-colors ${location.pathname === "/collection"
+            className={`text-xs md:text-sm font-medium uppercase tracking-wider transition-colors px-2 py-2 ${location.pathname === "/collection"
               ? activeColor
               : textColor
               }`}
@@ -73,7 +73,7 @@ const Header = () => {
           </Link>
           <Link
             to="/about"
-            className={`text-sm font-medium uppercase tracking-wider transition-colors ${location.pathname === "/about"
+            className={`text-xs md:text-sm font-medium uppercase tracking-wider transition-colors px-2 py-2 ${location.pathname === "/about"
               ? activeColor
               : textColor
               }`}
