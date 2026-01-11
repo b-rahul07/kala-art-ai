@@ -17,11 +17,7 @@ const ArtistCard = ({ name, genre, nationality, years, wikipedia, index }: Artis
   const [imageError, setImageError] = useState(false);
 
   // Construct image path: /artists/Firstname_Lastname.jpg
-  // Replace all whitespace with underscores
   const imagePath = `/artists/${name.replace(/\s+/g, "_")}.jpg`;
-
-  // Debug logging
-  console.log("Loading image:", imagePath);
 
   // Generate fallback gradient color
   const hue = (name.charCodeAt(0) * 7 + name.charCodeAt(1) * 3) % 40 + 20;
@@ -32,7 +28,10 @@ const ArtistCard = ({ name, genre, nationality, years, wikipedia, index }: Artis
   };
 
   return (
-    <motion.div
+    <motion.a
+      href={wikipedia}
+      target="_blank"
+      rel="noopener noreferrer"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{
@@ -101,20 +100,6 @@ const ArtistCard = ({ name, genre, nationality, years, wikipedia, index }: Artis
           <p className="text-xs font-light uppercase tracking-[0.1em] text-white/70">
             {nationality} · {years}
           </p>
-
-          {/* Wikipedia Link */}
-          {wikipedia && (
-            <a
-              href={wikipedia}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1 mt-2 text-xs font-medium uppercase tracking-[0.15em] text-amber-700 dark:text-gold hover:text-amber-600 dark:hover:text-gold/80 transition-colors"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <ExternalLink className="h-3 w-3" />
-              Read Bio
-            </a>
-          )}
         </motion.div>
       </div>
 
@@ -143,7 +128,7 @@ const ArtistCard = ({ name, genre, nationality, years, wikipedia, index }: Artis
         }}
         transition={{ duration: 0.4 }}
       />
-    </motion.div>
+    </motion.a>
   );
 };
 
