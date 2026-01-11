@@ -16,33 +16,83 @@ const ArtistCard = ({ name, genre, nationality, years, wikipedia, index }: Artis
   const [isHovered, setIsHovered] = useState(false);
   const [imageUrl, setImageUrl] = useState<string | null>(null);
 
+  // Format artist name for Wikipedia API
+  const formatNameForWikipedia = (artistName: string): string => {
+    return artistName
+      .trim()
+      .split(' ')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+      .join('_');
+  };
+
   useEffect(() => {
     const fetchWikipediaImage = async () => {
       try {
+        // Extract page name from Wikipedia URL
         const urlParts = wikipedia.split('/wiki/');
-        if (urlParts.length < 2) return;
+        if (urlParts.length < 2) {
+          console.warn(`Invalid Wikipedia URL for ${name}: ${wikipedia}`);
+          return;
+        }
 
-        const pageName = urlParts[1];
-        const apiUrl = `https://en.wikipedia.org/w/api.php?action=query&titles=${encodeURIComponent(pageName)}&prop=pageimages&format=json&pithumbsize=500&origin=*&redirects=1`;
+        let pageName = decodeURIComponent(urlParts[1]);
 
-        const response = await fetch(apiUrl);
-        const data = await response.json();
+        // Try primary API call
+        const primaryApiUrl = `https://en.wikipedia.org/w/api.php?action=query&titles=${encodeURIComponent(pageName)}&prop=pageimages&format=json&pithumbsize=500&origin=*&redirects=1`;
 
-        const pages = data.query?.pages;
-        if (pages) {
-          const pageId = Object.keys(pages)[0];
-          const thumbnail = pages[pageId]?.thumbnail?.source;
-          if (thumbnail) {
-            setImageUrl(thumbnail);
+        let response = await fetch(primaryApiUrl);
+        let data = await response.json();
+
+        let pages = data.query?.pages;
+        let pageId = pages ? Object.keys(pages)[0] : null;
+        let thumbnail = pageId && pages[pageId]?.thumbnail?.source;
+
+        // If primary fetch failed or returned no image, try fallback search
+        if (!thumbnail || pageId === '-1') {
+          console.warn(`Primary fetch failed for ${name}, trying fallback search. URL: ${primaryApiUrl}`);
+
+          // Format name and try search API
+          const formattedName = formatNameForWikipedia(name);
+          const searchApiUrl = `https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=${encodeURIComponent(formattedName)}&format=json&origin=*`;
+
+          const searchResponse = await fetch(searchApiUrl);
+          const searchData = await searchResponse.json();
+
+          if (searchData.query?.search?.length > 0) {
+            const bestMatch = searchData.query.search[0].title;
+            console.log(`Found fallback match for ${name}: ${bestMatch}`);
+
+            // Try fetching image with the search result
+            const fallbackApiUrl = `https://en.wikipedia.org/w/api.php?action=query&titles=${encodeURIComponent(bestMatch)}&prop=pageimages&format=json&pithumbsize=500&origin=*&redirects=1`;
+
+            const fallbackResponse = await fetch(fallbackApiUrl);
+            const fallbackData = await fallbackResponse.json();
+
+            const fallbackPages = fallbackData.query?.pages;
+            const fallbackPageId = fallbackPages ? Object.keys(fallbackPages)[0] : null;
+            thumbnail = fallbackPageId && fallbackPages[fallbackPageId]?.thumbnail?.source;
+
+            if (!thumbnail) {
+              console.warn(`Fallback search also failed for ${name}. URL: ${fallbackApiUrl}`);
+            }
           }
         }
+
+        if (thumbnail) {
+          setImageUrl(thumbnail);
+        } else {
+          console.warn(`No image found for ${name} after all attempts`);
+          // Set to null to show gradient fallback
+          setImageUrl(null);
+        }
       } catch (err) {
-        console.error('Failed to fetch Wikipedia image:', err);
+        console.error(`Failed to fetch Wikipedia image for ${name}:`, err);
+        setImageUrl(null);
       }
     };
 
     fetchWikipediaImage();
-  }, [wikipedia]);
+  }, [wikipedia, name]);
 
   // Generate fallback gradient color
   const hue = (name.charCodeAt(0) * 7 + name.charCodeAt(1) * 3) % 40 + 20;
