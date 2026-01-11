@@ -145,7 +145,7 @@ const Hero = () => {
       </AnimatePresence>
 
       {/* 1. TOP BANNER SECTION */}
-      <section className="relative w-full h-[50vh] min-h-[400px] flex items-center justify-center overflow-hidden pt-32">
+      <section className="relative w-full min-h-screen flex items-center justify-center overflow-hidden">
         {/* Background Image with Dark Overlay */}
         <div className="hero-bg-image" />
 
