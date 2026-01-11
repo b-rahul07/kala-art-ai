@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { ExternalLink } from "lucide-react";
 
 interface ArtistCardProps {
@@ -14,44 +14,20 @@ interface ArtistCardProps {
 const ArtistCard = ({ name, genre, nationality, years, wikipedia, index }: ArtistCardProps) => {
   const primaryGenre = genre.split(",")[0].trim();
   const [isHovered, setIsHovered] = useState(false);
-  const [imageUrl, setImageUrl] = useState<string | null>(null);
+  const [imageError, setImageError] = useState(false);
 
-  useEffect(() => {
-    const fetchWikipediaImage = async () => {
-      try {
-        const urlParts = wikipedia.split('/wiki/');
-        if (urlParts.length < 2) return;
-
-        const pageName = urlParts[1];
-        const apiUrl = `https://en.wikipedia.org/w/api.php?action=query&titles=${encodeURIComponent(pageName)}&prop=pageimages&format=json&pithumbsize=500&origin=*&redirects=1`;
-
-        const response = await fetch(apiUrl);
-        const data = await response.json();
-
-        const pages = data.query?.pages;
-        if (pages) {
-          const pageId = Object.keys(pages)[0];
-          const thumbnail = pages[pageId]?.thumbnail?.source;
-          if (thumbnail) {
-            setImageUrl(thumbnail);
-          }
-        }
-      } catch (err) {
-        console.error('Failed to fetch Wikipedia image:', err);
-      }
-    };
-
-    fetchWikipediaImage();
-  }, [wikipedia]);
+  // Construct image path: /artists/Firstname_Lastname.jpg
+  const imagePath = `/artists/${name.replace(/ /g, '_')}.jpg`;
 
   // Generate fallback gradient color
   const hue = (name.charCodeAt(0) * 7 + name.charCodeAt(1) * 3) % 40 + 20;
 
+  const handleImageError = () => {
+    setImageError(true);
+  };
+
   return (
-    <motion.a
-      href={wikipedia}
-      target="_blank"
-      rel="noopener noreferrer"
+    <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{
@@ -70,23 +46,30 @@ const ArtistCard = ({ name, genre, nationality, years, wikipedia, index }: Artis
           scale: isHovered ? 1.05 : 1,
         }}
         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-        style={{
-          backgroundImage: imageUrl
-            ? `url(${imageUrl})`
-            : `linear-gradient(135deg, hsl(${hue} 60% 95%) 0%, hsl(${hue + 20} 50% 90%) 100%)`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-        }}
       >
-        {/* Fallback Initial if no image */}
-        {!imageUrl && (
-          <div className="absolute inset-0 flex items-center justify-center">
-            <span
-              className="font-serif text-8xl italic"
-              style={{ color: `hsl(${hue} 40% 40% / 0.3)` }}
-            >
-              {name.charAt(0)}
-            </span>
+        {!imageError ? (
+          <img
+            src={imagePath}
+            alt={name}
+            onError={handleImageError}
+            className="h-full w-full object-cover"
+          />
+        ) : (
+          <div
+            className="h-full w-full"
+            style={{
+              backgroundImage: `linear-gradient(135deg, hsl(${hue} 60% 95%) 0%, hsl(${hue + 20} 50% 90%) 100%)`,
+            }}
+          >
+            {/* Fallback Initial if image fails */}
+            <div className="absolute inset-0 flex items-center justify-center">
+              <span
+                className="font-serif text-8xl italic"
+                style={{ color: `hsl(${hue} 40% 40% / 0.3)` }}
+              >
+                {name.charAt(0)}
+              </span>
+            </div>
           </div>
         )}
       </motion.div>
@@ -113,6 +96,20 @@ const ArtistCard = ({ name, genre, nationality, years, wikipedia, index }: Artis
           <p className="text-xs font-light uppercase tracking-[0.1em] text-white/70">
             {nationality} · {years}
           </p>
+
+          {/* Wikipedia Link */}
+          {wikipedia && (
+            <a
+              href={wikipedia}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1 mt-2 text-xs font-medium uppercase tracking-[0.15em] text-amber-700 dark:text-gold hover:text-amber-600 dark:hover:text-gold/80 transition-colors"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <ExternalLink className="h-3 w-3" />
+              Read Bio
+            </a>
+          )}
         </motion.div>
       </div>
 
@@ -141,7 +138,7 @@ const ArtistCard = ({ name, genre, nationality, years, wikipedia, index }: Artis
         }}
         transition={{ duration: 0.4 }}
       />
-    </motion.a>
+    </motion.div>
   );
 };
 
