@@ -1,9 +1,21 @@
 import { Link, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
+import { useState, useEffect } from "react";
 import ThemeToggle from "./ThemeToggle";
 
 const Header = () => {
   const location = useLocation();
+  const [scrolled, setScrolled] = useState(false);
+
+  // Track scroll position
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   // Use white text on home page (over dark banner), dark text on other pages
   const isHomePage = location.pathname === '/';
@@ -14,12 +26,19 @@ const Header = () => {
     ? 'text-amber-300'
     : 'text-amber-700 dark:text-gold';
 
+  // Dynamic background based on scroll
+  const headerBg = scrolled
+    ? 'bg-background/80 backdrop-blur-md border-b border-white/10'
+    : isHomePage
+      ? 'bg-transparent backdrop-blur-sm'
+      : 'bg-background/80 backdrop-blur-md border-b border-border/40';
+
   return (
     <motion.header
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-      className={`fixed top-0 left-0 w-full z-50 ${isHomePage ? 'bg-transparent backdrop-blur-sm' : 'bg-background/80 backdrop-blur-md border-b border-border/40'}`}
+      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${headerBg}`}
     >
       <div className="container mx-auto flex h-16 items-center justify-between px-8">
         <Link to="/" className="flex items-center group">
