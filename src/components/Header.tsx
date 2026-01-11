@@ -1,11 +1,13 @@
 import { Link, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
+import { useTheme } from "@/hooks/use-theme";
 import ThemeToggle from "./ThemeToggle";
 
 const Header = () => {
   const location = useLocation();
   const [scrolled, setScrolled] = useState(false);
+  const { theme } = useTheme();
 
   // Track scroll position globally - persists across page navigations
   useEffect(() => {
@@ -20,16 +22,22 @@ const Header = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [location.pathname]); // Re-run when route changes
 
-  // Seamless materialization background with backdrop blur
+  // Theme-aware seamless materialization background with backdrop blur
   const headerBg = scrolled
-    ? 'bg-black/60 backdrop-blur-xl border-b border-amber-900/20'
+    ? theme === 'light'
+      ? 'bg-white/90 backdrop-blur-xl border-b border-gray-200'
+      : 'bg-black/60 backdrop-blur-xl border-b border-amber-900/20'
     : 'bg-transparent';
 
-  // Universal golden accent styling for all links
-  const linkStyle = 'text-amber-400/90 hover:text-amber-200 hover:drop-shadow-[0_0_8px_rgba(251,191,36,0.4)] transition-all duration-300';
+  // Theme-aware golden accent styling for all links
+  const linkStyle = theme === 'light'
+    ? 'text-amber-700 hover:text-amber-900 hover:drop-shadow-[0_0_8px_rgba(146,64,14,0.3)] transition-all duration-300'
+    : 'text-amber-400/90 hover:text-amber-200 hover:drop-shadow-[0_0_8px_rgba(251,191,36,0.4)] transition-all duration-300';
 
-  // Active link styling with brighter gold
-  const activeLinkStyle = 'text-amber-200 drop-shadow-[0_0_8px_rgba(251,191,36,0.4)]';
+  // Active link styling with enhanced contrast
+  const activeLinkStyle = theme === 'light'
+    ? 'text-amber-900 drop-shadow-[0_0_8px_rgba(146,64,14,0.3)] font-semibold'
+    : 'text-amber-200 drop-shadow-[0_0_8px_rgba(251,191,36,0.4)]';
 
   return (
     <motion.header
@@ -45,29 +53,29 @@ const Header = () => {
             transition={{ type: "spring", stiffness: 400 }}
             src="/kala-logo-transparent.png"
             alt="కళ | Kala"
-            className="h-20 md:h-24 w-auto min-w-[60px] transition-all duration-300"
+            className="h-16 md:h-24 w-auto min-w-[50px] transition-all duration-300"
           />
         </Link>
 
-        <nav className="flex items-center gap-3 md:gap-6">
+        <nav className="flex items-center gap-1 sm:gap-3 md:gap-6">
           <a
             href="https://github.com/b-rahul07/kala-art-ai"
             target="_blank"
             rel="noopener noreferrer"
-            className={`text-xs md:text-sm font-medium uppercase tracking-wider px-2 py-2 ${linkStyle}`}
+            className={`hidden sm:block text-xs md:text-sm font-medium uppercase tracking-wider px-2 py-2 ${linkStyle}`}
           >
             GitHub
           </a>
           <Link
             to="/collection"
-            className={`text-xs md:text-sm font-medium uppercase tracking-wider px-2 py-2 ${location.pathname === "/collection" ? activeLinkStyle : linkStyle
+            className={`text-xs md:text-sm font-medium uppercase tracking-wider px-1.5 md:px-2 py-2 ${location.pathname === "/collection" ? activeLinkStyle : linkStyle
               }`}
           >
             Collection
           </Link>
           <Link
             to="/about"
-            className={`text-xs md:text-sm font-medium uppercase tracking-wider px-2 py-2 ${location.pathname === "/about" ? activeLinkStyle : linkStyle
+            className={`text-xs md:text-sm font-medium uppercase tracking-wider px-1.5 md:px-2 py-2 ${location.pathname === "/about" ? activeLinkStyle : linkStyle
               }`}
           >
             About

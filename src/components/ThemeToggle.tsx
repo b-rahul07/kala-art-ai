@@ -5,8 +5,10 @@ import { useTheme } from "@/hooks/use-theme";
 const ThemeToggle = () => {
   const { theme, toggleTheme } = useTheme();
 
-  // Match navigation link styling - universal golden accent
-  const iconStyle = 'text-amber-400/90 hover:text-amber-200 hover:drop-shadow-[0_0_8px_rgba(251,191,36,0.4)] transition-all duration-300';
+  // Match navigation link styling - theme-aware for high contrast
+  const iconStyle = theme === 'light'
+    ? 'text-amber-700 hover:text-amber-900 hover:drop-shadow-[0_0_8px_rgba(146,64,14,0.3)] transition-all duration-300'
+    : 'text-amber-400/90 hover:text-amber-200 hover:drop-shadow-[0_0_8px_rgba(251,191,36,0.4)] transition-all duration-300';
 
   return (
     <motion.button

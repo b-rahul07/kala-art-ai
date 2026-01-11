@@ -34,7 +34,7 @@ const About = () => {
         transition={{ duration: 10, repeat: Infinity }}
       />
 
-      <main className="relative z-10 flex-grow flex flex-col items-center justify-center px-8 pt-24 md:pt-48 pb-24 md:px-16 lg:px-24">
+      <main className="relative z-10 flex-grow flex flex-col items-center justify-center px-6 pt-24 md:pt-48 pb-24 md:px-16 lg:px-24">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -54,7 +54,7 @@ const About = () => {
             <Sparkles className="h-4 w-4" />
           </motion.div>
 
-          <h1 className="font-serif text-4xl italic text-foreground md:text-5xl">
+          <h1 className="font-serif text-2xl md:text-4xl lg:text-5xl italic text-foreground">
             About{" "}
             <span className="gradient-text">కళ | Kala</span>
           </h1>
@@ -65,13 +65,13 @@ const About = () => {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="mt-12 space-y-6 text-left"
           >
-            <p className="text-base font-light leading-relaxed text-gray-900 dark:text-muted-foreground">
+            <p className="text-sm md:text-base font-light leading-relaxed text-gray-900 dark:text-muted-foreground">
               కళ | Kala is an AI-powered art style classifier that can identify the artistic
               influence in any image. Named after the Sanskrit word for "art," కళ | Kala
               represents the intersection of artificial intelligence and human creativity.
             </p>
 
-            <p className="text-base font-light leading-relaxed text-gray-900 dark:text-muted-foreground">
+            <p className="text-sm md:text-base font-light leading-relaxed text-gray-900 dark:text-muted-foreground">
               From <span className="text-amber-700 dark:text-gold">Van Gogh's</span> expressive swirls to{" "}
               <span className="text-terracotta">Monet's</span> ethereal light, from{" "}
               <span className="text-amber-700 dark:text-gold">Picasso's</span> geometric abstractions to{" "}
@@ -80,12 +80,12 @@ const About = () => {
             </p>
           </motion.div>
 
-          {/* Feature cards */}
+          {/* Feature cards - mobile-first grid */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
-            className="mt-16 grid gap-6 sm:grid-cols-3"
+            className="mt-16 grid gap-6 grid-cols-1 sm:grid-cols-3"
           >
             {features.map((feature, index) => (
               <motion.div
@@ -102,10 +102,10 @@ const About = () => {
                 >
                   <feature.icon className="h-5 w-5" />
                 </motion.div>
-                <h3 className="font-serif text-lg italic text-foreground">
+                <h3 className="font-serif text-base md:text-lg italic text-foreground">
                   {feature.title}
                 </h3>
-                <p className="text-center text-xs font-light leading-relaxed text-gray-700 dark:text-muted-foreground">
+                <p className="text-center text-xs md:text-sm font-light leading-relaxed text-gray-700 dark:text-muted-foreground">
                   {feature.description}
                 </p>
               </motion.div>
