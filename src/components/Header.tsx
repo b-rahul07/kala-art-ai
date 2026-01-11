@@ -10,7 +10,7 @@ const Header = () => {
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-      className="fixed top-0 z-50 w-full border-b border-border/40 backdrop-blur-xl bg-background/60 supports-[backdrop-filter]:bg-background/40"
+      className="absolute top-0 left-0 w-full z-50 bg-transparent"
     >
       <div className="container mx-auto flex h-16 items-center justify-between px-8">
         <Link to="/" className="flex items-center group">
@@ -28,15 +28,15 @@ const Header = () => {
             href="https://github.com/b-rahul07/kala-art-ai"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-sm font-medium uppercase tracking-wider text-foreground/80 transition-colors hover:text-foreground"
+            className="text-sm font-medium uppercase tracking-wider text-white/90 transition-colors hover:text-white"
           >
             GitHub
           </a>
           <Link
             to="/collection"
             className={`text-sm font-medium uppercase tracking-wider transition-colors ${location.pathname === "/collection"
-              ? "text-amber-700 dark:text-gold"
-              : "text-foreground/80 hover:text-foreground"
+              ? "text-amber-300"
+              : "text-white/90 hover:text-white"
               }`}
           >
             Collection
@@ -44,8 +44,8 @@ const Header = () => {
           <Link
             to="/about"
             className={`text-sm font-medium uppercase tracking-wider transition-colors ${location.pathname === "/about"
-              ? "text-amber-700 dark:text-gold"
-              : "text-foreground/80 hover:text-foreground"
+              ? "text-amber-300"
+              : "text-white/90 hover:text-white"
               }`}
           >
             About

@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
-import { Sparkles } from "lucide-react";
+import { Sparkles, ExternalLink } from "lucide-react";
 import { getArtistStyle } from "@/utils/artistStyles";
+import { useState, useEffect } from "react";
 
 interface Prediction {
   artist: string;
@@ -15,14 +16,52 @@ interface ClassificationResultProps {
   predictions: Prediction[];
 }
 
+interface ArtistData {
+  name: string;
+  wikipedia: string;
+}
+
 const ClassificationResult = ({
   imageUrl,
   predictions,
 }: ClassificationResultProps) => {
+  const [artistsData, setArtistsData] = useState<ArtistData[]>([]);
+
+  useEffect(() => {
+    // Fetch artists CSV to get Wikipedia URLs
+    const loadArtistsData = async () => {
+      try {
+        const response = await fetch('/data/artists.csv');
+        const csvText = await response.text();
+
+        const lines = csvText.trim().split('\n');
+        const parsedData: ArtistData[] = lines.slice(1).map((line) => {
+          const values = line.split(',');
+          return {
+            name: values[0]?.trim() || '',
+            wikipedia: values[3]?.trim() || ''
+          };
+        });
+
+        setArtistsData(parsedData);
+      } catch (error) {
+        console.error("Failed to load artists data:", error);
+      }
+    };
+
+    loadArtistsData();
+  }, []);
+
   if (!predictions || predictions.length === 0) return null;
 
   const topPrediction = predictions[0];
   const otherPredictions = predictions.slice(1);
+
+  // Find Wikipedia URL for top prediction
+  const artistData = artistsData.find(
+    (artist) => artist.name === topPrediction.artist
+  );
+  const wikipediaUrl = artistData?.wikipedia || topPrediction.wikipedia;
 
   return (
     <motion.div
@@ -101,25 +140,22 @@ const ClassificationResult = ({
           </p>
           <div className="mt-1 h-0.5 w-16 bg-gradient-to-r from-gold to-terracotta" />
 
-          {/* Wikipedia Read More Link */}
-          {topPrediction.wikipedia && (
+          {/* Wikipedia Read Biography Button */}
+          {wikipediaUrl && (
             <motion.div
               initial={{ opacity: 0, y: 5 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6 }}
-              className="mt-4 flex flex-col items-center gap-2"
+              className="mt-4"
             >
-              <p className="text-sm font-light text-gray-600 dark:text-muted-foreground">
-                Curious to learn more?
-              </p>
               <a
-                href={topPrediction.wikipedia}
+                href={wikipediaUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group font-serif text-base italic text-amber-700 dark:text-gold transition-all duration-300 hover:text-amber-800 dark:hover:text-gold/80"
+                className="inline-flex items-center gap-2 rounded-full bg-amber-700 dark:bg-gold px-6 py-3 text-sm font-medium uppercase tracking-[0.15em] text-white transition-all duration-300 hover:bg-amber-800 dark:hover:bg-gold/80 hover:shadow-lg"
               >
-                Read full biography of {topPrediction.artist} on Wikipedia →
-                <span className="ml-1 inline-block transition-transform duration-300 group-hover:translate-x-1">→</span>
+                <ExternalLink className="h-4 w-4" />
+                Read Biography
               </a>
             </motion.div>
           )}
