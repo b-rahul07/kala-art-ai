@@ -140,22 +140,23 @@ const ClassificationResult = ({
           </p>
           <div className="mt-1 h-0.5 w-16 bg-gradient-to-r from-gold to-terracotta" />
 
-          {/* Wikipedia Read Biography Button */}
+          {/* Elegant Biography Link */}
           {wikipediaUrl && (
             <motion.div
               initial={{ opacity: 0, y: 5 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6 }}
-              className="mt-4"
+              className="mt-6"
             >
               <a
                 href={wikipediaUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-full bg-amber-700 dark:bg-gold px-6 py-3 text-sm font-medium uppercase tracking-[0.15em] text-white transition-all duration-300 hover:bg-amber-800 dark:hover:bg-gold/80 hover:shadow-lg"
+                className="group inline-flex items-center gap-2 font-serif text-base text-amber-200/90 transition-all duration-300 hover:underline decoration-1 underline-offset-4"
+                style={{ color: '#D4AF37' }}
               >
-                <ExternalLink className="h-4 w-4" />
-                Read Biography
+                Explore the story behind the master: <span className="italic">{topPrediction.artist}</span>
+                <ExternalLink className="h-4 w-4 transition-transform group-hover:translate-x-1" />
               </a>
             </motion.div>
           )}
