@@ -19,7 +19,7 @@ const Header = () => {
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-      className={`absolute top-0 left-0 w-full z-50 ${isHomePage ? 'bg-transparent' : 'bg-background/80 backdrop-blur-md border-b border-border/40'}`}
+      className={`fixed top-0 left-0 w-full z-50 ${isHomePage ? 'bg-transparent backdrop-blur-md' : 'bg-background/80 backdrop-blur-md border-b border-border/40'}`}
     >
       <div className="container mx-auto flex h-16 items-center justify-between px-8">
         <Link to="/" className="flex items-center group">
