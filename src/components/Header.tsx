@@ -60,7 +60,11 @@ const Header = () => {
     return (
       <Component
         {...props as any}
-        className={`block text-xl font-serif py-4 border-b border-border/50 w-full text-center ${isActive ? activeLinkStyle : linkStyle
+        className={`block text-lg font-medium py-4 w-full text-center transition-all duration-200 ${isActive
+            ? 'text-amber-500 font-bold'
+            : theme === 'light'
+              ? 'text-gray-900 hover:text-amber-600'
+              : 'text-amber-400 hover:text-amber-300'
           }`}
         onClick={() => setIsOpen(false)}
       >
@@ -130,7 +134,7 @@ const Header = () => {
         </div>
       </div>
 
-      {/* Mobile Menu Overlay */}
+      {/* Mobile Menu Overlay - Full Width Glass Effect */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -138,9 +142,12 @@ const Header = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="md:hidden fixed top-16 left-0 right-0 w-full bg-background/95 backdrop-blur-lg z-40 border-b border-border/50 shadow-2xl"
+            className={`md:hidden fixed top-16 left-0 right-0 w-full z-40 border-b shadow-2xl ${theme === 'light'
+                ? 'bg-white/80 backdrop-blur-2xl border-gray-200'
+                : 'bg-black/80 backdrop-blur-2xl border-amber-900/20'
+              }`}
           >
-            <nav className="flex flex-col w-full px-6 py-8">
+            <nav className="flex flex-col w-full px-6 py-6">
               <MobileLink to="/collection">
                 The Collection
               </MobileLink>
@@ -152,11 +159,12 @@ const Header = () => {
               </MobileLink>
             </nav>
 
-            <div className="pb-8 flex flex-col items-center gap-4">
-              <p className="text-xs text-muted-foreground font-light tracking-widest uppercase">
+            <div className="pb-6 flex flex-col items-center gap-3">
+              <p className={`text-xs font-light tracking-widest uppercase ${theme === 'light' ? 'text-gray-600' : 'text-muted-foreground'
+                }`}>
                 Discover Art's DNA
               </p>
-              <div className="w-12 h-1 bg-amber-500/20 rounded-full" />
+              <div className="w-12 h-1 bg-amber-500/30 rounded-full" />
             </div>
           </motion.div>
         )}

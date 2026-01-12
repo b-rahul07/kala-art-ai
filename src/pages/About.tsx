@@ -35,18 +35,18 @@ const About = () => {
       />
 
       <main className="relative z-10 flex-grow flex flex-col items-center justify-center pt-24 md:pt-32 pb-24 w-full max-w-full overflow-x-hidden">
-        <div className="max-w-4xl mx-auto px-6 w-full max-w-full">
+        <div className="w-full max-w-screen-xl mx-auto px-4 md:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-            className="text-center w-full"
+            className="text-center w-full space-y-8"
           >
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.1 }}
-              className="mb-6 flex items-center justify-center gap-2 text-amber-700 dark:text-gold"
+              className="flex items-center justify-center gap-2 text-amber-700 dark:text-gold"
             >
               <Sparkles className="h-4 w-4 flex-shrink-0" />
               <span className="text-[10px] font-medium uppercase tracking-[0.3em]">
@@ -55,7 +55,7 @@ const About = () => {
               <Sparkles className="h-4 w-4 flex-shrink-0" />
             </motion.div>
 
-            <h1 className="font-serif text-3xl md:text-5xl italic text-foreground mb-6 break-words">
+            <h1 className="font-serif text-3xl md:text-5xl italic text-foreground break-words text-center">
               About{" "}
               <span className="gradient-text">కళ | Kala</span>
             </h1>
@@ -64,7 +64,7 @@ const About = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="mt-8 md:mt-12 space-y-6 flex flex-col w-full"
+              className="space-y-8 flex flex-col w-full"
             >
               <p className="text-sm md:text-base font-light leading-relaxed text-gray-900 dark:text-muted-foreground bg-white/50 dark:bg-black/20 backdrop-blur-sm p-5 md:p-6 rounded-lg border border-border/50 text-left break-words w-full max-w-full">
                 కళ | Kala is an AI-powered art style classifier that can identify the artistic
@@ -86,7 +86,7 @@ const About = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.4 }}
-              className="mt-12 md:mt-16 grid gap-6 grid-cols-1 md:grid-cols-3 w-full"
+              className="grid gap-6 grid-cols-1 md:grid-cols-3 w-full"
             >
               {features.map((feature, index) => (
                 <motion.div
@@ -95,7 +95,7 @@ const About = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.5 + index * 0.1 }}
                   whileHover={{ y: -4, boxShadow: 'var(--shadow-gold)' }}
-                  className="group flex flex-col items-center gap-4 rounded-lg bg-card p-6 shadow-subtle transition-all duration-300 border border-border/50 w-full max-w-full"
+                  className="group flex flex-col items-center gap-4 rounded-lg bg-card p-6 shadow-subtle transition-all duration-300 border border-border/50 w-full"
                 >
                   <motion.div
                     whileHover={{ rotate: 10, scale: 1.1 }}
@@ -117,7 +117,7 @@ const About = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.6, delay: 0.8 }}
-              className="mt-16 w-full"
+              className="w-full"
             >
               <p className="text-[10px] font-medium uppercase tracking-[0.2em] text-gray-700 dark:text-muted-foreground">
                 Technology Stack
