@@ -31,12 +31,12 @@ const Header = () => {
 
   // Theme-aware golden accent styling for all links
   const linkStyle = theme === 'light'
-    ? 'text-amber-700 hover:text-amber-900 hover:drop-shadow-[0_0_8px_rgba(146,64,14,0.3)] transition-all duration-300'
+    ? 'text-[hsl(38,92%,55%)] font-extrabold hover:text-amber-600 hover:drop-shadow-[0_0_8px_rgba(245,158,11,0.5)] transition-all duration-300'
     : 'text-amber-400/90 hover:text-amber-200 hover:drop-shadow-[0_0_8px_rgba(251,191,36,0.4)] transition-all duration-300';
 
   // Active link styling with enhanced contrast
   const activeLinkStyle = theme === 'light'
-    ? 'text-amber-900 drop-shadow-[0_0_8px_rgba(146,64,14,0.3)] font-semibold'
+    ? 'text-amber-600 drop-shadow-[0_0_8px_rgba(146,64,14,0.3)] font-black'
     : 'text-amber-200 drop-shadow-[0_0_8px_rgba(251,191,36,0.4)]';
 
   return (
@@ -62,20 +62,20 @@ const Header = () => {
             href="https://github.com/b-rahul07/kala-art-ai"
             target="_blank"
             rel="noopener noreferrer"
-            className={`hidden sm:block text-xs md:text-sm font-medium uppercase tracking-wider px-2 py-2 ${linkStyle}`}
+            className={`hidden sm:block text-sm md:text-base font-medium uppercase tracking-wider px-2 py-2 ${linkStyle}`}
           >
             GitHub
           </a>
           <Link
             to="/collection"
-            className={`text-xs md:text-sm font-medium uppercase tracking-wider px-1.5 md:px-2 py-2 ${location.pathname === "/collection" ? activeLinkStyle : linkStyle
+            className={`text-sm md:text-base font-medium uppercase tracking-wider px-1.5 md:px-2 py-2 ${location.pathname === "/collection" ? activeLinkStyle : linkStyle
               }`}
           >
             Collection
           </Link>
           <Link
             to="/about"
-            className={`text-xs md:text-sm font-medium uppercase tracking-wider px-1.5 md:px-2 py-2 ${location.pathname === "/about" ? activeLinkStyle : linkStyle
+            className={`text-sm md:text-base font-medium uppercase tracking-wider px-1.5 md:px-2 py-2 ${location.pathname === "/about" ? activeLinkStyle : linkStyle
               }`}
           >
             About
