@@ -1,4 +1,4 @@
-# కళ | Kala Art Gallery 🎨
+# కళ | Kala Deep Learning Artist Recognition & Art Style Classification Platform 🎨
 
 > **"Where Art Finds Itself."**
 
