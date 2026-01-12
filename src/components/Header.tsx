@@ -132,26 +132,26 @@ const Header = () => {
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "100vh" }}
-            exit={{ opacity: 0, height: 0 }}
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="md:hidden fixed inset-0 top-0 left-0 w-full bg-background/95 backdrop-blur-md z-40 flex flex-col items-center justify-center pt-20 px-6"
+            className="md:hidden fixed top-16 left-0 right-0 w-full bg-background/95 backdrop-blur-lg z-40 border-b border-border/50 shadow-2xl"
           >
-            <nav className="flex flex-col w-full max-w-sm gap-2">
-              <MobileLink href="https://github.com/b-rahul07/kala-art-ai">
-                GitHub
-              </MobileLink>
+            <nav className="flex flex-col w-full px-6 py-8">
               <MobileLink to="/collection">
                 The Collection
               </MobileLink>
               <MobileLink to="/about">
-                About Kala
+                About
+              </MobileLink>
+              <MobileLink href="https://github.com/b-rahul07/kala-art-ai">
+                GitHub
               </MobileLink>
             </nav>
 
-            <div className="mt-12 flex flex-col items-center gap-4">
-              <p className="text-sm text-muted-foreground font-light tracking-widest uppercase">
+            <div className="pb-8 flex flex-col items-center gap-4">
+              <p className="text-xs text-muted-foreground font-light tracking-widest uppercase">
                 Discover Art's DNA
               </p>
               <div className="w-12 h-1 bg-amber-500/20 rounded-full" />
