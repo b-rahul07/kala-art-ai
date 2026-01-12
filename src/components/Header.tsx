@@ -74,39 +74,41 @@ const Header = () => {
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-      className={`fixed top-0 left-0 w-full z-[100] transition-all duration-500 ${headerBg}`}
+      className={`fixed top-0 left-0 w-full max-w-full z-[100] transition-all duration-500 ${headerBg}`}
     >
-      <div className="container mx-auto flex h-16 items-center justify-between px-4 md:px-8">
-        <Link to="/" className="flex items-center group z-50">
+      <div className="w-full max-w-full mx-auto flex h-16 items-center justify-between px-4 md:px-8">
+        <Link to="/" className="flex items-center group z-50 flex-shrink-0">
           <motion.img
             whileHover={{ scale: 1.05, rotate: 5 }}
             transition={{ type: "spring", stiffness: 400 }}
             src="/kala-logo-transparent.png"
             alt="కళ | Kala"
-            className="h-12 md:h-16 lg:h-24 w-auto min-w-[50px] transition-all duration-300"
+            className="h-12 md:h-16 lg:h-20 w-auto max-w-[120px] md:max-w-none transition-all duration-300"
           />
         </Link>
 
+        <div className="flex-1" />
+
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center gap-6">
+        <nav className="hidden md:flex items-center gap-4 lg:gap-6 flex-nowrap flex-shrink-0">
           <a
             href="https://github.com/b-rahul07/kala-art-ai"
             target="_blank"
             rel="noopener noreferrer"
-            className={`text-sm md:text-base font-medium uppercase tracking-wider px-2 py-2 ${linkStyle}`}
+            className={`text-sm md:text-base font-medium uppercase tracking-wider px-2 py-2 whitespace-nowrap ${linkStyle}`}
           >
             GitHub
           </a>
           <Link
             to="/collection"
-            className={`text-sm md:text-base font-medium uppercase tracking-wider px-2 py-2 ${location.pathname === "/collection" ? activeLinkStyle : linkStyle
+            className={`text-sm md:text-base font-medium uppercase tracking-wider px-2 py-2 whitespace-nowrap ${location.pathname === "/collection" ? activeLinkStyle : linkStyle
               }`}
           >
             Collection
           </Link>
           <Link
             to="/about"
-            className={`text-sm md:text-base font-medium uppercase tracking-wider px-2 py-2 ${location.pathname === "/about" ? activeLinkStyle : linkStyle
+            className={`text-sm md:text-base font-medium uppercase tracking-wider px-2 py-2 whitespace-nowrap ${location.pathname === "/about" ? activeLinkStyle : linkStyle
               }`}
           >
             About
@@ -116,14 +118,14 @@ const Header = () => {
         </nav>
 
         {/* Mobile Navigation Toggle */}
-        <div className="flex md:hidden items-center gap-4">
+        <div className="flex md:hidden items-center gap-3 flex-shrink-0">
           <ThemeToggle />
           <button
             onClick={toggleMenu}
             className={`p-2 focus:outline-none z-50 ${linkStyle}`}
             aria-label="Toggle menu"
           >
-            {isOpen ? <X className="h-8 w-8" /> : <Menu className="h-8 w-8" />}
+            {isOpen ? <X className="h-7 w-7" /> : <Menu className="h-7 w-7" />}
           </button>
         </div>
       </div>

@@ -23,7 +23,7 @@ const features = [
 
 const About = () => {
   return (
-    <div className="flex flex-col min-h-screen bg-background">
+    <div className="flex flex-col min-h-screen bg-background w-full max-w-full overflow-x-hidden">
       <Header />
 
       {/* Decorative elements */}
@@ -34,13 +34,13 @@ const About = () => {
         transition={{ duration: 10, repeat: Infinity }}
       />
 
-      <main className="relative z-10 flex-grow flex flex-col items-center justify-center pt-24 md:pt-32 pb-24 w-full">
-        <div className="max-w-4xl mx-auto px-6 w-full">
+      <main className="relative z-10 flex-grow flex flex-col items-center justify-center pt-24 md:pt-32 pb-24 w-full max-w-full overflow-x-hidden">
+        <div className="max-w-4xl mx-auto px-6 w-full max-w-full">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-            className="text-center"
+            className="text-center w-full"
           >
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
@@ -48,14 +48,14 @@ const About = () => {
               transition={{ delay: 0.1 }}
               className="mb-6 flex items-center justify-center gap-2 text-amber-700 dark:text-gold"
             >
-              <Sparkles className="h-4 w-4" />
+              <Sparkles className="h-4 w-4 flex-shrink-0" />
               <span className="text-[10px] font-medium uppercase tracking-[0.3em]">
                 About the Project
               </span>
-              <Sparkles className="h-4 w-4" />
+              <Sparkles className="h-4 w-4 flex-shrink-0" />
             </motion.div>
 
-            <h1 className="font-serif text-3xl md:text-5xl italic text-foreground mb-6">
+            <h1 className="font-serif text-3xl md:text-5xl italic text-foreground mb-6 break-words">
               About{" "}
               <span className="gradient-text">కళ | Kala</span>
             </h1>
@@ -64,15 +64,15 @@ const About = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="mt-8 md:mt-12 space-y-6 flex flex-col"
+              className="mt-8 md:mt-12 space-y-6 flex flex-col w-full"
             >
-              <p className="text-sm md:text-base font-light leading-relaxed text-gray-900 dark:text-muted-foreground bg-white/50 dark:bg-black/20 backdrop-blur-sm p-5 md:p-6 rounded-lg border border-border/50 text-left">
+              <p className="text-sm md:text-base font-light leading-relaxed text-gray-900 dark:text-muted-foreground bg-white/50 dark:bg-black/20 backdrop-blur-sm p-5 md:p-6 rounded-lg border border-border/50 text-left break-words w-full max-w-full">
                 కళ | Kala is an AI-powered art style classifier that can identify the artistic
                 influence in any image. Named after the Sanskrit word for "art," కళ | Kala
                 represents the intersection of artificial intelligence and human creativity.
               </p>
 
-              <p className="text-sm md:text-base font-light leading-relaxed text-gray-900 dark:text-muted-foreground bg-white/50 dark:bg-black/20 backdrop-blur-sm p-5 md:p-6 rounded-lg border border-border/50 text-left">
+              <p className="text-sm md:text-base font-light leading-relaxed text-gray-900 dark:text-muted-foreground bg-white/50 dark:bg-black/20 backdrop-blur-sm p-5 md:p-6 rounded-lg border border-border/50 text-left break-words w-full max-w-full">
                 From <span className="text-amber-700 dark:text-gold font-medium">Van Gogh's</span> expressive swirls to{" "}
                 <span className="text-terracotta font-medium">Monet's</span> ethereal light, from{" "}
                 <span className="text-amber-700 dark:text-gold font-medium">Picasso's</span> geometric abstractions to{" "}
@@ -86,7 +86,7 @@ const About = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.4 }}
-              className="mt-12 md:mt-16 grid gap-6 grid-cols-1 md:grid-cols-3"
+              className="mt-12 md:mt-16 grid gap-6 grid-cols-1 md:grid-cols-3 w-full"
             >
               {features.map((feature, index) => (
                 <motion.div
@@ -95,18 +95,18 @@ const About = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.5 + index * 0.1 }}
                   whileHover={{ y: -4, boxShadow: 'var(--shadow-gold)' }}
-                  className="group flex flex-col items-center gap-4 rounded-lg bg-card p-6 shadow-subtle transition-all duration-300 border border-border/50"
+                  className="group flex flex-col items-center gap-4 rounded-lg bg-card p-6 shadow-subtle transition-all duration-300 border border-border/50 w-full max-w-full"
                 >
                   <motion.div
                     whileHover={{ rotate: 10, scale: 1.1 }}
-                    className="flex h-12 w-12 items-center justify-center rounded-full bg-amber-700/10 text-amber-700 dark:bg-gold/10 dark:text-gold transition-colors group-hover:bg-amber-700/20 dark:group-hover:bg-gold/20"
+                    className="flex h-12 w-12 items-center justify-center rounded-full bg-amber-700/10 text-amber-700 dark:bg-gold/10 dark:text-gold transition-colors group-hover:bg-amber-700/20 dark:group-hover:bg-gold/20 flex-shrink-0"
                   >
                     <feature.icon className="h-5 w-5" />
                   </motion.div>
-                  <h3 className="font-serif text-lg italic text-foreground">
+                  <h3 className="font-serif text-lg italic text-foreground break-words text-center w-full">
                     {feature.title}
                   </h3>
-                  <p className="text-center text-xs md:text-sm font-light leading-relaxed text-gray-700 dark:text-muted-foreground">
+                  <p className="text-center text-xs md:text-sm font-light leading-relaxed text-gray-700 dark:text-muted-foreground break-words w-full">
                     {feature.description}
                   </p>
                 </motion.div>
@@ -117,12 +117,12 @@ const About = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.6, delay: 0.8 }}
-              className="mt-16"
+              className="mt-16 w-full"
             >
               <p className="text-[10px] font-medium uppercase tracking-[0.2em] text-gray-700 dark:text-muted-foreground">
                 Technology Stack
               </p>
-              <div className="mt-4 flex flex-wrap items-center justify-center gap-3">
+              <div className="mt-4 flex flex-wrap items-center justify-center gap-3 w-full">
                 {["TensorFlow", "Python", "React", "TypeScript"].map((tech, i) => (
                   <motion.span
                     key={tech}
