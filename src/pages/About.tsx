@@ -34,12 +34,12 @@ const About = () => {
         transition={{ duration: 10, repeat: Infinity }}
       />
 
-      <main className="relative z-10 flex-grow flex flex-col items-center justify-center px-6 pt-24 md:pt-48 pb-24 md:px-16 lg:px-24">
+      <main className="relative z-10 flex-grow flex flex-col items-center justify-center px-6 pt-24 md:pt-48 pb-24 md:px-16 lg:px-24 w-full">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          className="max-w-2xl text-center"
+          className="max-w-2xl w-full text-center"
         >
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
@@ -54,7 +54,7 @@ const About = () => {
             <Sparkles className="h-4 w-4" />
           </motion.div>
 
-          <h1 className="font-serif text-2xl md:text-4xl lg:text-5xl italic text-foreground">
+          <h1 className="font-serif text-3xl md:text-5xl lg:text-5xl italic text-foreground mb-4">
             About{" "}
             <span className="gradient-text">కళ | Kala</span>
           </h1>
@@ -63,19 +63,19 @@ const About = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="mt-12 space-y-6 text-left"
+            className="mt-8 md:mt-12 space-y-6 text-left"
           >
-            <p className="text-sm md:text-base font-light leading-relaxed text-gray-900 dark:text-muted-foreground">
+            <p className="text-sm md:text-base font-light leading-relaxed text-gray-900 dark:text-muted-foreground bg-white/50 dark:bg-black/20 backdrop-blur-sm p-4 rounded-lg border border-border/50">
               కళ | Kala is an AI-powered art style classifier that can identify the artistic
               influence in any image. Named after the Sanskrit word for "art," కళ | Kala
               represents the intersection of artificial intelligence and human creativity.
             </p>
 
-            <p className="text-sm md:text-base font-light leading-relaxed text-gray-900 dark:text-muted-foreground">
-              From <span className="text-amber-700 dark:text-gold">Van Gogh's</span> expressive swirls to{" "}
-              <span className="text-terracotta">Monet's</span> ethereal light, from{" "}
-              <span className="text-amber-700 dark:text-gold">Picasso's</span> geometric abstractions to{" "}
-              <span className="text-terracotta">Kahlo's</span> symbolic narratives—కళ | Kala
+            <p className="text-sm md:text-base font-light leading-relaxed text-gray-900 dark:text-muted-foreground bg-white/50 dark:bg-black/20 backdrop-blur-sm p-4 rounded-lg border border-border/50">
+              From <span className="text-amber-700 dark:text-gold font-medium">Van Gogh's</span> expressive swirls to{" "}
+              <span className="text-terracotta font-medium">Monet's</span> ethereal light, from{" "}
+              <span className="text-amber-700 dark:text-gold font-medium">Picasso's</span> geometric abstractions to{" "}
+              <span className="text-terracotta font-medium">Kahlo's</span> symbolic narratives—కళ | Kala
               sees the art in every image.
             </p>
           </motion.div>
@@ -85,7 +85,7 @@ const About = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
-            className="mt-16 grid gap-6 grid-cols-1 sm:grid-cols-3"
+            className="mt-12 md:mt-16 grid gap-6 grid-cols-1 sm:grid-cols-3"
           >
             {features.map((feature, index) => (
               <motion.div
@@ -94,7 +94,7 @@ const About = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5 + index * 0.1 }}
                 whileHover={{ y: -4, boxShadow: 'var(--shadow-gold)' }}
-                className="group flex flex-col items-center gap-4 rounded-lg bg-card p-6 shadow-subtle transition-all duration-300"
+                className="group flex flex-col items-center gap-4 rounded-lg bg-card p-6 shadow-subtle transition-all duration-300 border border-border/50"
               >
                 <motion.div
                   whileHover={{ rotate: 10, scale: 1.1 }}
@@ -102,7 +102,7 @@ const About = () => {
                 >
                   <feature.icon className="h-5 w-5" />
                 </motion.div>
-                <h3 className="font-serif text-base md:text-lg italic text-foreground">
+                <h3 className="font-serif text-lg md:text-lg italic text-foreground">
                   {feature.title}
                 </h3>
                 <p className="text-center text-xs md:text-sm font-light leading-relaxed text-gray-700 dark:text-muted-foreground">
@@ -129,7 +129,7 @@ const About = () => {
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: 0.9 + i * 0.1 }}
                   whileHover={{ scale: 1.05, y: -2 }}
-                  className="rounded-full bg-muted px-4 py-1.5 text-xs font-medium text-muted-foreground transition-all hover:bg-gold/10 hover:text-foreground"
+                  className="rounded-full bg-muted px-4 py-1.5 text-xs font-medium text-muted-foreground transition-all hover:bg-gold/10 hover:text-foreground border border-transparent hover:border-gold/20"
                 >
                   {tech}
                 </motion.span>
